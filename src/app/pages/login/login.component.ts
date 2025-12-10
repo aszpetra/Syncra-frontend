@@ -1,0 +1,31 @@
+declare const google: any;
+import { Component } from '@angular/core';
+import { environment } from '../../../environments/environment';
+
+@Component({
+  selector: 'app-login',
+  imports: [],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
+})
+export class LoginComponent {
+  private clientId = environment.googleClientId;
+  private redirectUri = environment.redirectUri;
+  private scope = 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file';
+
+
+  loginWithGoogleCalendarAccess(): void {
+      const params = new URLSearchParams({
+      client_id: this.clientId,
+      redirect_uri: this.redirectUri,
+      response_type: 'code',
+      scope: this.scope,
+      access_type: 'offline',
+      prompt: 'consent'
+    });
+
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+
+  }
+
+}
